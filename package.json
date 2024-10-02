@@ -6,8 +6,15 @@
     "access": "public"
   },
   "license": "MIT",
-  "description": "",
-  "keywords": [],
+  "description": "A TypeScript library that extends JSON to handle additional JavaScript data types like Date, Set, Map, BigInt, RegExp, and more.",
+  "keywords": [
+    "TJSON",
+    "JSON",
+    "Typed JSON",
+    "Typed JSON",
+    "Typed JSON parser",
+    "Typed JSON stringify"
+  ],
   "repository": {
     "url": "git+https://github.com/jsheaven/tjson.git",
     "type": "git"

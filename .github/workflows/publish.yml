@@ -37,13 +37,12 @@ jobs:
             run-id: ${{ steps.get-run-id.outputs.run-id }}  
       - run: ls -al dist
       - run: yarn release
-# TODO: change me!
-#      - name: Publish if version in package.json change
-#        uses: springtype-org/github-action-npm-publish@master
-#        with:
-#          install_build_packages: true
-#          project_build_dir: release
-#          create_tag: true
-#          auth_token: ${{ secrets.npm_token }}
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish if version in package.json change
+        uses: springtype-org/github-action-npm-publish@master
+        with:
+          install_build_packages: true
+          project_build_dir: release
+          create_tag: true
+          auth_token: ${{ secrets.npm_token }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
