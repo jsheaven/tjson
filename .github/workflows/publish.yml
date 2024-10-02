@@ -1,0 +1,49 @@
+name: Publish Package
+
+on:
+  workflow_run:
+    workflows: ["BuildAndTest"]
+    types:
+      - completed
+
+jobs:
+  publish:
+    if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get run ID of "Test" workflow
+        id: get-run-id
+        run: |
+          OTHER_REPO="${{ github.repository }}"
+          WF_NAME="BuildAndTest"
+          RUN_ID=`gh run --repo ${OTHER_REPO} list --workflow ${WF_NAME} --json databaseId --jq .[0].databaseId`
+          echo "Detected latest run id of ${RUN_ID} for workflow ${WF_NAME}"
+          echo "run-id=${RUN_ID}" >> "$GITHUB_OUTPUT"
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - uses: actions/checkout@v3
+      - name: Use Node.js 
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+      - name: Download build
+        uses: actions/download-artifact@v4
+        with:
+            name: build
+            path: dist
+            github-token: ${{ github.token }}
+            repository: ${{ github.repository }}
+            run-id: ${{ steps.get-run-id.outputs.run-id }}  
+      - run: ls -al dist
+      - run: yarn release
+# TODO: change me!
+#      - name: Publish if version in package.json change
+#        uses: springtype-org/github-action-npm-publish@master
+#        with:
+#          install_build_packages: true
+#          project_build_dir: release
+#          create_tag: true
+#          auth_token: ${{ secrets.npm_token }}
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
