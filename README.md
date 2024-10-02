@@ -1,4 +1,5 @@
 # @jsheaven/tjson
+
 **TJSON** is a TypeScript library that extends JSON serialization and deserialization by providing support for additional JavaScript data types such as `Date`, `Set`, `Map`, `BigInt`, `RegExp`, and more. This ensures seamless handling of complex data structures that are not natively supported by the standard JSON methods.
 
 ## User Stories
@@ -25,11 +26,13 @@
 You can install **TJSON** via npm or yarn:
 
 ### npm
+
 ```bash
 npm install @jsheaven/tjson
 ```
 
 ### yarn
+
 ```bash
 yarn add @jsheaven/tjson
 ```
@@ -49,7 +52,10 @@ import TJSON from '@jsheaven/tjson'
 const obj = {
   date: new Date(),
   set: new Set([1, 2, 3]),
-  map: new Map([['key1', 'value1'], ['key2', 'value2']]),
+  map: new Map([
+    ['key1', 'value1'],
+    ['key2', 'value2'],
+  ]),
 }
 
 // Stringify the object
@@ -71,8 +77,12 @@ import TJSON from '@jsheaven/tjson'
 const customConverter = {
   key: 'js:customType',
   is: (obj) => obj instanceof CustomType,
-  toTJSON: (obj) => { /* serialization logic */ },
-  fromTJSON: (json) => { /* deserialization logic */ },
+  toTJSON: (obj) => {
+    /* serialization logic */
+  },
+  fromTJSON: (json) => {
+    /* deserialization logic */
+  },
 }
 
 TJSON.register(customConverter)
@@ -92,21 +102,23 @@ Certainly! Here's the updated documentation with a note indicating that only glo
 ### Supported Types Overview
 
 **TJSON** provides built-in support for several types, including non-standard JavaScript types such as `Date`, `RegExp`, `Set`, `Map`, `BigInt`, `null`, `undefined` and **Typed Arrays**. Additionally, **TJSON** supports global symbols but **does not support local symbols**. This means only global symbols created with `Symbol.for()` are supported.
+
 ### Undefined, Null
+
 activate undefined and null by calling the fn
 
 ```ts
 import TJSON from '@jsheaven/tjson'
 
-TSJSON.registerUndefined()
-      .registerNull()
+TSJSON.registerUndefined().registerNull()
 ```
+
 ### Global Symbols
 
 - **Supported**: Global symbols created using `Symbol.for()`.
 - **Not Supported**: Symbols created using `Symbol()` (local symbols).
-  
-TJSON handles global symbols by serializing them into their unique key representations, ensuring that symbols shared across different parts of the application can be properly serialized and deserialized. **Locale symbols are converted to globals** 
+
+TJSON handles global symbols by serializing them into their unique key representations, ensuring that symbols shared across different parts of the application can be properly serialized and deserialized. **Locale symbols are converted to globals**
 
 #### Example
 
@@ -177,7 +189,7 @@ console.log(parsedObj)
 ---
 
 This should provide a clear indication that only global symbols are supported in **TJSON**, along with documentation on the usage of Typed Arrays and other supported types.
-  
+
 ## Contributing
 
 We welcome contributions! If you have ideas for new features, find bugs, or want to improve documentation, feel free to open an issue or submit a pull request.
