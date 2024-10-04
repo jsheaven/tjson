@@ -1,7 +1,6 @@
 import { expect } from '@jest/globals'
 import {
   TJSONConverter,
-  ParseOptions,
   TJSON,
   INT8_ARRAY_CONVERTER,
   UINT8_ARRAY_CONVERTER,
@@ -276,10 +275,12 @@ describe('Typed Array Transformers', () => {
 
   it('test Float64Array', () => {
     const TypedJSON = new TJSON().register(FLOAT64_ARRAY_CONVERTER)
-    const input = { float64Array: new Float64Array([0.1, -1.5, 64.3]) }
+    const input = { float64Array: new Float64Array([NaN, 0.1, -1.5, 64.3]) }
 
     const tjson = TypedJSON.stringify(input)
-    expect(tjson).toEqual('{"content":{"float64Array":[0.1,-1.5,64.3]},"type":{"float64Array":"js:float64array"}}')
+    expect(tjson).toEqual(
+      '{"content":{"float64Array":["NaN",0.1,-1.5,64.3]},"type":{"float64Array":"js:float64array","float64Array.[0]":"js:number:nan"}}',
+    )
     expect(TypedJSON.parse(tjson)).toEqual(input)
   })
 

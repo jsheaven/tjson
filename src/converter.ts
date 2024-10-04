@@ -168,7 +168,7 @@ export const SYMBOL_CONVERTER: TJSONConverter<symbol> = {
   is: (obj: any): boolean => {
     return typeof obj === 'symbol'
   },
-  toTJSON: (obj: symbol, options) => {
+  toTJSON: (obj: symbol) => {
     return obj.description
   },
   fromTJSON: (obj: string) => {
@@ -179,70 +179,70 @@ export const SYMBOL_CONVERTER: TJSONConverter<symbol> = {
 export const INT8_ARRAY_CONVERTER: TJSONConverter<Int8Array> = {
   key: 'js:int8array',
   is: (obj: any) => obj instanceof Int8Array,
-  toTJSON: (obj: Int8Array, options: PreStringifyOptions) => [...obj],
+  toTJSON: (obj: Int8Array, options: PreStringifyOptions) => preStringify([...obj], options),
   fromTJSON: (content: any) => new Int8Array(content),
 }
 
 export const UINT8_ARRAY_CONVERTER: TJSONConverter<Uint8Array> = {
   key: 'js:uint8array',
   is: (obj: any) => obj instanceof Uint8Array,
-  toTJSON: (obj: Uint8Array, options: PreStringifyOptions) => [...obj],
+  toTJSON: (obj: Uint8Array, options: PreStringifyOptions) => preStringify([...obj], options),
   fromTJSON: (content: any) => new Uint8Array(content),
 }
 
 export const UINT8_CLAMPED_ARRAY_CONVERTER: TJSONConverter<Uint8ClampedArray> = {
   key: 'js:uint8clampedarray',
   is: (obj: any) => obj instanceof Uint8ClampedArray,
-  toTJSON: (obj: Uint8ClampedArray, options: PreStringifyOptions) => [...obj],
+  toTJSON: (obj: Uint8ClampedArray, options: PreStringifyOptions) => preStringify([...obj], options),
   fromTJSON: (content: any) => new Uint8ClampedArray(content),
 }
 
 export const INT16_ARRAY_CONVERTER: TJSONConverter<Int16Array> = {
   key: 'js:int16array',
   is: (obj: any) => obj instanceof Int16Array,
-  toTJSON: (obj: Int16Array, options: PreStringifyOptions) => [...obj],
+  toTJSON: (obj: Int16Array, options: PreStringifyOptions) => preStringify([...obj], options),
   fromTJSON: (content: any) => new Int16Array(content),
 }
 
 export const UINT16_ARRAY_CONVERTER: TJSONConverter<Uint16Array> = {
   key: 'js:uint16array',
   is: (obj: any) => obj instanceof Uint16Array,
-  toTJSON: (obj: Uint16Array, options: PreStringifyOptions) => [...obj],
+  toTJSON: (obj: Uint16Array, options: PreStringifyOptions) => preStringify([...obj], options),
   fromTJSON: (content: any) => new Uint16Array(content),
 }
 
 export const INT32_ARRAY_CONVERTER: TJSONConverter<Int32Array> = {
   key: 'js:int32array',
   is: (obj: any) => obj instanceof Int32Array,
-  toTJSON: (obj: Int32Array, options: PreStringifyOptions) => [...obj],
+  toTJSON: (obj: Int32Array, options: PreStringifyOptions) => preStringify([...obj], options),
   fromTJSON: (content: any) => new Int32Array(content),
 }
 
 export const UINT32_ARRAY_CONVERTER: TJSONConverter<Uint32Array> = {
   key: 'js:uint32array',
   is: (obj: any) => obj instanceof Uint32Array,
-  toTJSON: (obj: Uint32Array, options: PreStringifyOptions) => [...obj],
+  toTJSON: (obj: Uint32Array, options: PreStringifyOptions) => preStringify([...obj], options),
   fromTJSON: (content: any) => new Uint32Array(content),
 }
 
 export const FLOAT32_ARRAY_CONVERTER: TJSONConverter<Float32Array> = {
   key: 'js:float32array',
   is: (obj: any) => obj instanceof Float32Array,
-  toTJSON: (obj: Float32Array, options: PreStringifyOptions) => [...obj],
+  toTJSON: (obj: Float32Array, options: PreStringifyOptions) => preStringify([...obj], options),
   fromTJSON: (content: any) => new Float32Array(content),
 }
 
 export const FLOAT64_ARRAY_CONVERTER: TJSONConverter<Float64Array> = {
   key: 'js:float64array',
   is: (obj: any) => obj instanceof Float64Array,
-  toTJSON: (obj: Float64Array, options: PreStringifyOptions) => [...obj],
+  toTJSON: (obj: Float64Array, options: PreStringifyOptions) => preStringify([...obj], options),
   fromTJSON: (content: any) => new Float64Array(content),
 }
 
 export const BIGINT64_ARRAY_CONVERTER: TJSONConverter<BigInt64Array> = {
   key: 'js:bigint64array',
   is: (obj: any) => obj instanceof BigInt64Array,
-  toTJSON: (obj: BigInt64Array, options: PreStringifyOptions) => preStringify([...obj.values()], options),
+  toTJSON: (obj: BigInt64Array, options: PreStringifyOptions) => preStringify([...obj], options),
   fromTJSON: (content: any, type, options) =>
     new BigInt64Array(
       content.map((obj, i) => parse(obj, type, { ...options, parentKey: [...(options.parentKey ?? []), `[${i}]`] })),
@@ -252,7 +252,7 @@ export const BIGINT64_ARRAY_CONVERTER: TJSONConverter<BigInt64Array> = {
 export const BIGUINT64_ARRAY_CONVERTER: TJSONConverter<BigUint64Array> = {
   key: 'js:biguint64array',
   is: (obj: any) => obj instanceof BigUint64Array,
-  toTJSON: (obj: BigUint64Array, options: PreStringifyOptions) => preStringify([...obj.values()], options),
+  toTJSON: (obj: BigUint64Array, options: PreStringifyOptions) => preStringify([...obj], options),
   fromTJSON: (content: any, type, options) =>
     new BigUint64Array(
       content.map((obj, i) => parse(obj, type, { ...options, parentKey: [...(options.parentKey ?? []), `[${i}]`] })),
