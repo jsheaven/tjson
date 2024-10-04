@@ -258,3 +258,26 @@ export const BIGUINT64_ARRAY_CONVERTER: TJSONConverter<BigUint64Array> = {
       content.map((obj, i) => parse(obj, type, { ...options, parentKey: [...(options.parentKey ?? []), `[${i}]`] })),
     ),
 }
+
+export const ERROR_CONVERTER: TJSONConverter<Error> = {
+  key: 'js:error',
+  is: (obj: any) => obj instanceof Error,
+  toTJSON: (obj: Error, options: PreStringifyOptions) => {
+    return preStringify(
+      {
+        name: obj.name,
+        message: obj.message,
+        stack: obj.stack,
+        ...obj,
+      },
+      options,
+    )
+  },
+  fromTJSON: (content: any) => {
+    const resp = new Error()
+    Object.entries(content).forEach(([key, value]) => {
+      resp[key] = value
+    })
+    return resp
+  },
+}

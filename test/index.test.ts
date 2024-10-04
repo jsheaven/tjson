@@ -305,4 +305,23 @@ describe('Typed Array Transformers', () => {
     )
     expect(TypedJSON.parse(tjson)).toEqual(input)
   })
+
+  it('test Error', () => {
+    const TypedJSON = new TJSON().registerError()
+    class CustomError extends Error {
+      constructor(message: string, public test: string, public num: number) {
+        super(message)
+      }
+    }
+    const input = new CustomError('error', 'test', NaN)
+
+    const tjson = TypedJSON.stringify(input)
+    //remove stack will be always different
+    const result = JSON.parse(tjson)
+    result.content.stack = 'stack'
+    expect(JSON.stringify(result)).toEqual(
+      '{"content":{"name":"Error","message":"error","stack":"stack","test":"test","num":"NaN"},"type":{"":"js:error","num":"js:number:nan"}}',
+    )
+    expect(TypedJSON.parse(tjson)).toEqual(input)
+  })
 })

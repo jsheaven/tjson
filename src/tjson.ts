@@ -24,6 +24,7 @@ import {
   TJSONMapper,
   NAN_CONVERTER,
   INFINITY_CONVERTER,
+  ERROR_CONVERTER,
 } from './converter'
 
 /**
@@ -100,9 +101,16 @@ export class TJSON {
    * Register standard coverter null.
    * @returns The TJSON instance for chaining
    */
-
   registerNull(): TJSON {
     this.register(NULL_CONVERTER)
+    return this
+  }
+  /**
+   * Register standard coverter error.
+   * @returns The TJSON instance for chaining
+   */
+  registerError(): TJSON {
+    this.register(ERROR_CONVERTER)
     return this
   }
   /**
